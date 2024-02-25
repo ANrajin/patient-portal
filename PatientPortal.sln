@@ -5,13 +5,17 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6905AF6B-64AA-4A6B-A63E-D5C98EA8CA5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientPortal.Api", "src\PatientPortal.Api\PatientPortal.Api.csproj", "{E7B67DE2-A507-417E-87C0-AA5150BA0373}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PatientPortal.Api", "src\PatientPortal.Api\PatientPortal.Api.csproj", "{E7B67DE2-A507-417E-87C0-AA5150BA0373}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientPortal.Web", "src\PatientPortal.Web\PatientPortal.Web.csproj", "{AD711556-E12F-4756-BC91-5C0DC4655DC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PatientPortal.Web", "src\PatientPortal.Web\PatientPortal.Web.csproj", "{AD711556-E12F-4756-BC91-5C0DC4655DC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FEA4C09D-F4EA-4674-990F-FEE8869ACCBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientPortal.Api.Tests", "tests\PatientPortal.Api.Tests\PatientPortal.Api.Tests.csproj", "{7E64576C-EE20-4DD1-A0DC-FEF69977A756}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PatientPortal.Api.Tests", "tests\PatientPortal.Api.Tests\PatientPortal.Api.Tests.csproj", "{7E64576C-EE20-4DD1-A0DC-FEF69977A756}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libraries", "libraries", "{80939E2F-07E5-4539-9606-1C2D1A9C2310}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientPortal.Domain", "src\libraries\PatientPortal.Domain\PatientPortal.Domain.csproj", "{0F7C349D-4F35-49E6-90F4-58897D90DEF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{7E64576C-EE20-4DD1-A0DC-FEF69977A756}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E64576C-EE20-4DD1-A0DC-FEF69977A756}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E64576C-EE20-4DD1-A0DC-FEF69977A756}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F7C349D-4F35-49E6-90F4-58897D90DEF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7C349D-4F35-49E6-90F4-58897D90DEF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7C349D-4F35-49E6-90F4-58897D90DEF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7C349D-4F35-49E6-90F4-58897D90DEF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +47,8 @@ Global
 		{E7B67DE2-A507-417E-87C0-AA5150BA0373} = {6905AF6B-64AA-4A6B-A63E-D5C98EA8CA5C}
 		{AD711556-E12F-4756-BC91-5C0DC4655DC0} = {6905AF6B-64AA-4A6B-A63E-D5C98EA8CA5C}
 		{7E64576C-EE20-4DD1-A0DC-FEF69977A756} = {FEA4C09D-F4EA-4674-990F-FEE8869ACCBB}
+		{80939E2F-07E5-4539-9606-1C2D1A9C2310} = {6905AF6B-64AA-4A6B-A63E-D5C98EA8CA5C}
+		{0F7C349D-4F35-49E6-90F4-58897D90DEF4} = {80939E2F-07E5-4539-9606-1C2D1A9C2310}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3F6B93C-D142-43C2-8EA2-4AECF8CAC09E}

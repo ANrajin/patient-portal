@@ -1,4 +1,4 @@
-﻿using PatientPortal.Api.UnitOfWorks;
+﻿using PatientPortal.Domain.UnitOfWork;
 
 namespace PatientPortal.Api.Endpoints
 {

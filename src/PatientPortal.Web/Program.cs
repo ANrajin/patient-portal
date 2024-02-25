@@ -1,7 +1,10 @@
+using PatientPortal.Domain;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDomainServices(builder.Configuration);
 
 var app = builder.Build();
 

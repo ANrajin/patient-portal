@@ -5,6 +5,12 @@ namespace PatientPortal.Api.Contexts
     public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> dbContextOptions) 
         : DbContext(dbContextOptions), IApplicationDbContext
     {
+        public async Task SaveAsync(CancellationToken cancellationToken)
+            => await SaveChangesAsync(cancellationToken);
+
+        public DbSet<TEntity> DbSet<TEntity>() where TEntity : class
+            => Set<TEntity>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly

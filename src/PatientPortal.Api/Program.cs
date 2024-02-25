@@ -10,9 +10,14 @@ var connectionString = builder.Configuration.GetConnectionString(connectionStrNa
 builder.Services.AddScoped<IApplicationDbContext>(provider =>
     provider.GetRequiredService<ApplicationDbContext>());
 
+builder.Services.AddSingleton<EntityInterceptor>();
+
 builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
 {
-    options.UseSqlServer(connectionStrName);
+    var entityInterceptor = sp.GetService<EntityInterceptor>()!;
+
+    options.UseSqlServer(connectionString)
+        .AddInterceptors(entityInterceptor);
 });
 
 builder.Services.AddEndpointsApiExplorer();

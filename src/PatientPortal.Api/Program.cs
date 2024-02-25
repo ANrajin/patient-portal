@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PatientPortal.Api.Contexts;
+using PatientPortal.Api.Endpoints;
 using PatientPortal.Api.Repositories.Allergies;
 using PatientPortal.Api.Repositories.DiseaseInformations;
 using PatientPortal.Api.Repositories.NCDs;
@@ -38,20 +39,36 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//Register Minimal API EndPoints
+app
+    .MapGroup("patients")
+    .WithTags("Patients")
+    .WithOpenApi()
+    .MapPatientEndPoints();
 
-app.MapGet("/weatherforecast", () =>
-{
-    return Results.Ok();
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app
+    .MapGroup("allergies")
+    .WithTags("Allergies")
+    .WithOpenApi()
+    .MapAllergiesEndPoints();
+
+app
+    .MapGroup("diseases-informations")
+    .WithTags("Diseases Informations")
+    .WithOpenApi()
+    .MapDiseasesInformationsEndPoints();
+
+app
+    .MapGroup("ncds")
+    .WithTags("NCDs")
+    .WithOpenApi()
+    .MapNCDsEndPoints();
 
 app.Run();

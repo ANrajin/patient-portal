@@ -8,7 +8,9 @@ namespace PatientPortal.Api.Endpoints
         {
             builder.MapGet("/", async (IUnitOfWorks unitOfWorks) =>
             {
-                return Results.Ok();
+                var data = await unitOfWorks.AllergiesRepository.GetAllAsync();
+
+                return Results.Ok(data);
             });
         }
     }

@@ -8,7 +8,9 @@ namespace PatientPortal.Api.Endpoints
         {
             builder.MapGet("/", async (IUnitOfWorks unitOfWorks) =>
             {
-                return Results.Ok();
+                var data = await unitOfWorks.NcdsRepository.GetAllAsync();
+
+                return Results.Ok(data);
             });
         }
     }

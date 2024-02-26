@@ -21,6 +21,10 @@ body {
   margin-bottom: 60px;
 }
 
+#patient-form-table tr td:first-child{
+    width: 20%;
+}
+
 .field-required::after {
     content: "*";
     margin-left: 2px !important;

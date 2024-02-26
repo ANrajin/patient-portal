@@ -12,6 +12,11 @@ namespace PatientPortal.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            return View();
+        }
+
+        public async Task<IActionResult> Create()
+        {
             try
             {
                 using var serviceScope = serviceScopeFactory.CreateScope();
@@ -28,11 +33,6 @@ namespace PatientPortal.Web.Controllers
 
                 return RedirectToAction("Error");
             }
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

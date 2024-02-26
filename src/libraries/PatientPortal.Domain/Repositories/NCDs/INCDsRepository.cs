@@ -1,4 +1,5 @@
-﻿using PatientPortal.Domain.Entities;
+﻿using PatientPortal.Domain.BusinessObjects;
+using PatientPortal.Domain.Entities;
 
 namespace PatientPortal.Domain.Repositories.NCDs
 {
@@ -6,5 +7,7 @@ namespace PatientPortal.Domain.Repositories.NCDs
     {
         Task<IReadOnlyCollection<NCD>> GetAllAsync
             (CancellationToken cancellationToken = default);
+
+        Task<IList<SelectListItemsBO>> GetSelectListItemsAsync();
     }
 }

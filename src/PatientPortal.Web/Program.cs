@@ -1,6 +1,9 @@
 using PatientPortal.Domain;
+using PatientPortal.Web.Models.HomeModels;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<HomeModel>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

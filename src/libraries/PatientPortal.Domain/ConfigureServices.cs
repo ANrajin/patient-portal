@@ -19,7 +19,7 @@ namespace PatientPortal.Domain
 
             var connectionString = configuration.GetConnectionString(connectionStrName);
 
-            services.AddScoped<IApplicationDbContext>(provider =>
+            services.AddTransient<IApplicationDbContext>(provider =>
                 provider.GetRequiredService<ApplicationDbContext>());
 
             services.AddSingleton<EntityInterceptor>();
@@ -30,7 +30,7 @@ namespace PatientPortal.Domain
 
                 options.UseSqlServer(connectionString)
                     .AddInterceptors(entityInterceptor);
-            });
+            }, ServiceLifetime.Transient);
 
             services.AddScoped<IUnitOfWorks, UnitOfWorks>();
             services.AddScoped<IPatientsRepository, PatientsRepository>();

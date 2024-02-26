@@ -26,4 +26,10 @@
 
         selectedOptions.remove();
     }
+
+    $("#patient-form").on('submit', function (e) {
+        e.preventDefault();
+
+        return false;
+    });
 });

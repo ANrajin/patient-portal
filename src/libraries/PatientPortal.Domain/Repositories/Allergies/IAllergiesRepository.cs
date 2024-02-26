@@ -1,4 +1,5 @@
-﻿using PatientPortal.Domain.Entities;
+﻿using PatientPortal.Domain.BusinessObjects;
+using PatientPortal.Domain.Entities;
 
 namespace PatientPortal.Domain.Repositories.Allergies
 {
@@ -6,5 +7,7 @@ namespace PatientPortal.Domain.Repositories.Allergies
     {
         Task<IReadOnlyCollection<Allergy>> GetAllAsync
             (CancellationToken cancellationToken = default);
+
+        Task<IList<SelectListItemsBO>> GetSelectListItemsAsync();
     }
 }

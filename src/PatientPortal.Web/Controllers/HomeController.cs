@@ -1,21 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
 using PatientPortal.Web.Models;
+using PatientPortal.Web.Models.HomeModels;
 using System.Diagnostics;
 
 namespace PatientPortal.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(IServiceScopeFactory serviceScopeFactory,
+        ILogger<HomeController> logger) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> _logger = logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public async Task<IActionResult> Index()
         {
-            _logger = logger;
-        }
+            try
+            {
+                using var serviceScope = serviceScopeFactory.CreateScope();
 
-        public IActionResult Index()
-        {
-            return View();
+                var model = serviceScope.ServiceProvider.GetRequiredService<HomeModel>();
+
+                await model.LoadModelData();
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+
+                return RedirectToAction("Error");
+            }
         }
 
         public IActionResult Privacy()

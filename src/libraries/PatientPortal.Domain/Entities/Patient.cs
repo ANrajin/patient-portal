@@ -6,10 +6,14 @@ namespace PatientPortal.Domain.Entities
     {
         public string Name { get; set; } = string.Empty;
 
+        public int DiseaseInformationId { get; set; }
+
+        public DiseaseInformation? DiseaseInformation { get; set; }
+
         public Epilepsy IsEpilepsy { get; set; }
 
-        public IList<NCDDetail>? NCDDetails { get; set; } = new List<NCDDetail>();
+        public IList<NCDDetail>? NCDDetails { get; set; } = [];
 
-        public IList<AllergiesDetail>? AllergiesDetails { get; set; } = new List<AllergiesDetail>();
+        public IList<AllergiesDetail>? AllergiesDetails { get; set; } = [];
     }
 }

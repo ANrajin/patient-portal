@@ -16,6 +16,16 @@ namespace PatientPortal.Domain.Contexts.Configurations
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(256);
+
+            builder.HasMany(x => x.NCDDetails)
+                .WithOne(y => y.Patient)
+                .HasForeignKey(x => x.PatientId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(x => x.AllergiesDetails)
+                .WithOne(y => y.Patient)
+                .HasForeignKey(x => x.PatientId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

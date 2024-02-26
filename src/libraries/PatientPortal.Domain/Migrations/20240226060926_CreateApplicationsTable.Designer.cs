@@ -12,7 +12,7 @@ using PatientPortal.Domain.Contexts;
 namespace PatientPortal.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240225200255_CreateApplicationsTable")]
+    [Migration("20240226060926_CreateApplicationsTable")]
     partial class CreateApplicationsTable
     {
         /// <inheritdoc />
@@ -327,6 +327,9 @@ namespace PatientPortal.Domain.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DiseaseInformationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("IsEpilepsy")
                         .HasColumnType("int");
 
@@ -339,6 +342,8 @@ namespace PatientPortal.Domain.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DiseaseInformationId");
 
                     b.ToTable("Patients", (string)null);
                 });
@@ -379,6 +384,22 @@ namespace PatientPortal.Domain.Migrations
                     b.Navigation("NCD");
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("PatientPortal.Domain.Entities.Patient", b =>
+                {
+                    b.HasOne("PatientPortal.Domain.Entities.DiseaseInformation", "DiseaseInformation")
+                        .WithMany("Patients")
+                        .HasForeignKey("DiseaseInformationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DiseaseInformation");
+                });
+
+            modelBuilder.Entity("PatientPortal.Domain.Entities.DiseaseInformation", b =>
+                {
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("PatientPortal.Domain.Entities.Patient", b =>

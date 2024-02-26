@@ -68,6 +68,7 @@ namespace PatientPortal.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    DiseaseInformationId = table.Column<int>(type: "int", nullable: false),
                     IsEpilepsy = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -75,6 +76,12 @@ namespace PatientPortal.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_DiseaseInformations_DiseaseInformationId",
+                        column: x => x.DiseaseInformationId,
+                        principalTable: "DiseaseInformations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,6 +200,11 @@ namespace PatientPortal.Domain.Migrations
                 name: "IX_NCDDetails_PatientId",
                 table: "NCDDetails",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_DiseaseInformationId",
+                table: "Patients",
+                column: "DiseaseInformationId");
         }
 
         /// <inheritdoc />
@@ -200,9 +212,6 @@ namespace PatientPortal.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AllergiesDetails");
-
-            migrationBuilder.DropTable(
-                name: "DiseaseInformations");
 
             migrationBuilder.DropTable(
                 name: "NCDDetails");
@@ -215,6 +224,9 @@ namespace PatientPortal.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "DiseaseInformations");
         }
     }
 }

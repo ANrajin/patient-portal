@@ -116,7 +116,7 @@
             url: `https://localhost:7243/patients/${id}`,
             method: 'delete',
         }).done(function (res) {
-            dataTable.draw();
+            window.Location.reload();
         }).fail(function (err) {
             console.error(err);
         });

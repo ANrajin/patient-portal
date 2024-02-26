@@ -1,4 +1,5 @@
-﻿using PatientPortal.Domain.Entities;
+﻿using FluentValidation.Results;
+using PatientPortal.Domain.Entities;
 using PatientPortal.Domain.UnitOfWork;
 
 namespace PatientPortal.Api.Models.PatientModels
@@ -88,6 +89,11 @@ namespace PatientPortal.Api.Models.PatientModels
 
             await _unitOfWorks.PatientsRepository.DeleteAsync(patient);
             await _unitOfWorks.SaveAsync();
+        }
+
+        internal IList<ValidationErrorModel> CreateValidationErrors(IList<ValidationFailure> errors)
+        {
+            return errors.Select(s => new ValidationErrorModel(s.PropertyName, s.ErrorMessage)).ToList();
         }
     }
 }

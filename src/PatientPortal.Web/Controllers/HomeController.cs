@@ -55,6 +55,26 @@ namespace PatientPortal.Web.Controllers
             }
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                using var serviceScope = serviceScopeFactory.CreateScope();
+
+                var model = serviceScope.ServiceProvider.GetRequiredService<PatientViewModel>();
+
+                await model.LoadModelData(id);
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+
+                return RedirectToAction("Error");
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

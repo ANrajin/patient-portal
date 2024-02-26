@@ -26,23 +26,26 @@ namespace PatientPortal.Api.Endpoints
                 return Results.Ok(data);
             });
 
-            builder.MapGet("/{id:int}", async (int id, IUnitOfWorks unitOfWorks) =>
-            {
-                return Results.Ok();
-            });
-
             builder.MapPost("/", async ([FromBody]PatientCreateModel patient,
                 IServiceScopeFactory serviceScopeFactory) =>
             {
                 try
                 {
+                    var validator = new PatientCreateValidator();
+                    var validate = validator.Validate(patient);
+
                     using var serviceScope = serviceScopeFactory.CreateScope();
 
                     var model = serviceScope.ServiceProvider.GetRequiredService<PatientModel>();
 
-                    await model.CreatePatient(patient);
+                    if (validate.IsValid)
+                    {
+                        await model.CreatePatient(patient);
 
-                    return Results.Ok();
+                        return Results.Ok();
+                    }
+
+                    return Results.BadRequest(model.CreateValidationErrors(validate.Errors));
                 }
                 catch (Exception ex)
                 {

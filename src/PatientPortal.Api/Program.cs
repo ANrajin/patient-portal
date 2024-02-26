@@ -1,10 +1,13 @@
+using FluentValidation;
 using PatientPortal.Api.Endpoints;
 using PatientPortal.Api.Models.PatientModels;
 using PatientPortal.Domain;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDomainServices(builder.Configuration);
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 builder.Services.AddScoped<PatientModel>();
 

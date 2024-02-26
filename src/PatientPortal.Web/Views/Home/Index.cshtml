@@ -13,18 +13,18 @@
                     <tbody>
                         <tr>
                             <td>
-                                <label class="form-label field-required" for="name">Patient Name</label>
+                                <label class="form-label field-required" for="Name">Patient Name</label>
                             </td>
                             <td>
-                                <input type="text" id="name" name="name" class="form-control my-2" />
+                                <input type="text" id="Name" name="Name" class="form-control my-2" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label class="form-label field-required" for="diseaseName">Disease Name</label>
+                                <label class="form-label field-required" for="DiseasesId">Disease Name</label>
                             </td>
                             <td>
-                                <select id="diseaseName" class="form-control form-select my-2">
+                                <select id="DiseasesId" name="DiseasesId" class="form-control form-select my-2">
                                     <option value="" selected disabled>Please Select a Disease Name</option>
                                     @foreach (var item in Model.DiseasesInfoList)
                                     {
@@ -35,10 +35,10 @@
                         </tr>
                         <tr>
                             <td>
-                                <label class="form-label field-required" for="epilepsy">Epilepsy</label>
+                                <label class="form-label field-required" for="Epilepsy">Epilepsy</label>
                             </td>
                             <td>
-                                <select id="epilepsy" class="form-control form-select my-2">
+                                <select id="Epilepsy" name="Epilepsy" class="form-control form-select my-2">
                                     <option value="" selected disabled>Please Select</option>
                                     @foreach(var item in Enum.GetValues(typeof(Epilepsy)))
                                     {
@@ -49,12 +49,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <label class="form-label" for="ncds">Other NCDs</label>
+                                <label class="form-label" for="Ncds">Other NCDs</label>
                             </td>
                             <td>
                                 <div class="row my-2">
                                     <div class="col-5">
-                                        <select name="ncds" id="ncds" multiple style="width: 100%; height: 250px;">
+                                        <select name="Ncds" id="Ncds" multiple style="width: 100%; height: 250px;">
                                             @foreach(var item in Model.NcdList)
                                             {
                                                 <option value="@item.Value">@item.Text</option>
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <select name="selectedNcds" id="selectedNcds" multiple style="width: 100%; height: 250px;">
+                                        <select name="SelectedNcds" id="SelectedNcds" multiple style="width: 100%; height: 250px;">
                                         </select>
                                     </div>
                                 </div>
@@ -76,12 +76,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <label class="form-label field-required" for="allergies">Allergies</label>
+                                <label class="form-label field-required" for="Allergies">Allergies</label>
                             </td>
                             <td>
                                 <div class="row my-2">
                                     <div class="col-5">
-                                        <select name="allergies" id="allergies" multiple style="width: 100%; height: 250px;">
+                                        <select name="Allergies" id="Allergies" multiple style="width: 100%; height: 250px;">
                                             @foreach (var item in Model.AllergiesList)
                                             {
                                                 <option value="@item.Value">@item.Text</option>
@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <select name="selectedAllergies" id="selectedAllergies" multiple style="width: 100%; height: 250px;">
+                                        <select name="SelectedAllergies" id="SelectedAllergies" multiple style="width: 100%; height: 250px;">
                                         </select>
                                     </div>
                                 </div>

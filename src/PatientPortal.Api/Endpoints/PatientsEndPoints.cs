@@ -1,4 +1,6 @@
-﻿using PatientPortal.Domain.UnitOfWork;
+﻿using Microsoft.AspNetCore.Mvc;
+using PatientPortal.Api.Models.PatientModels;
+using PatientPortal.Domain.UnitOfWork;
 
 namespace PatientPortal.Api.Endpoints
 {
@@ -16,7 +18,7 @@ namespace PatientPortal.Api.Endpoints
                 return Results.Ok();
             });
 
-            builder.MapPost("/", async (IUnitOfWorks unitOfWorks) =>
+            builder.MapPost("/", async ([FromBody]PatientCreateModel model) =>
             {
                 return Results.Ok();
             });

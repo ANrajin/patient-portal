@@ -6,6 +6,6 @@ namespace PatientPortal.Api.Models.PatientModels
         string Name,
         int DiseasesId,
         Epilepsy Epilepsy,
-        IList<int>? Acds,
-        IList<int>? Allergies);
+        IList<int>? SelectedNcds,
+        IList<int>? SelectedAllergies);
 }

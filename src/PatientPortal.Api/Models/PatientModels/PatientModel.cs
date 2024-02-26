@@ -59,5 +59,35 @@ namespace PatientPortal.Api.Models.PatientModels
                 AllergiesDetails = allergyDetails
             };
         }
+
+        public async Task<object> GetPatientsAsync(DatatableModel dataTableModel)
+        {
+            var (data, total) = await _unitOfWorks.PatientsRepository.GetPaginatedAsync(
+                dataTableModel.PageIndex, 
+                dataTableModel.PageSize);
+
+            return new
+            {
+                recordsTotal = total,
+                recordsFiltered = data.Count,
+                data = (from item in data
+                        select new string[]
+                {
+                    item.Name,
+                    item.DiseaseInformation?.Name ?? "-",
+                    item.IsEpilepsy.ToString(),
+                    item.Id.ToString()
+                }).ToArray()
+            };
+        }
+
+        public async Task RemovePatientAsync(int id)
+        {
+            var patient = await _unitOfWorks.PatientsRepository.GetByIdAsync(id, true)
+                ?? throw new ArgumentException("Patient not found by id");
+
+            await _unitOfWorks.PatientsRepository.DeleteAsync(patient);
+            await _unitOfWorks.SaveAsync();
+        }
     }
 }

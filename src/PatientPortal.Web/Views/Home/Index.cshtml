@@ -2,4 +2,26 @@
     ViewData["Title"] = "Home Page";
 }
 
+@section Styles{
+    <link href="~/lib/datatables-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+}
 
+@section Scripts{
+    <script src="~/lib/datatables/jquery.datatables.min.js"></script>
+    <script src="~/lib/datatables-bs4/js/datatables.bootstrap4.min.js"></script>
+}
+
+<div class="my-2">
+    <a asp-controller="Home" asp-action="Create" class="btn btn-primary">Add New Patient</a>
+</div>
+
+<table id="patientInfo" class="table table-striped">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>Patient Name</th>
+            <th>Diseases Information</th>
+            <th>Epelipcy</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>

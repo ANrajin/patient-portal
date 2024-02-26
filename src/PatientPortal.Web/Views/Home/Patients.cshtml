@@ -1,0 +1,48 @@
+﻿@model PatientPortal.Web.Models.HomeModels.PatientViewModel
+
+@{
+    ViewData["Title"] = "Patients";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Patient Information</h1>
+        <div class="my-2"></div>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Patient Name</td>
+                    <td>
+                        <strong>
+                            @Model.Name
+                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Diseases Information</td>
+                    <td>
+                        <strong>@Model.DiseasesName</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Epilepsy</td>
+                    <td>
+                        <strong>@Model.Epilepcy</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ncd Details</td>
+                    <td>
+                        <strong>@string.Join(", ", Model.NcdDetails)</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Allergy Details</td>
+                    <td>
+                        <strong>@string.Join(", ", Model.AllergyDetails)</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</dvi>

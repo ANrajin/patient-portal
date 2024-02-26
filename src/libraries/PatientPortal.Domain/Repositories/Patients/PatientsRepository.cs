@@ -13,7 +13,7 @@ namespace PatientPortal.Domain.Repositories.Patients
             return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public async Task<Patient?> GetByIdAsync(Guid id, bool shouldTrack = false,
+        public async Task<Patient?> GetByIdAsync(int id, bool shouldTrack = false,
             CancellationToken cancellationToken = default)
         {
             if (shouldTrack)
@@ -21,6 +21,30 @@ namespace PatientPortal.Domain.Repositories.Patients
 
             return await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(id), 
                 cancellationToken);
+        }
+
+        public async Task<Patient?> GetPatientInfoAsync(int id)
+        {
+            return await _dbSet.AsNoTracking()
+                .Include(x => x.DiseaseInformation)
+                .Include(x => x.NCDDetails)
+                .ThenInclude(y => y.NCD)
+                .Include(x => x.AllergiesDetails)
+                .ThenInclude(y => y.Allergy)
+                .Select(s => new Patient
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    DiseaseInformation = new DiseaseInformation
+                    {
+                        Name = s.DiseaseInformation.Name
+                    },
+                    IsEpilepsy = s.IsEpilepsy,
+                    NCDDetails = s.NCDDetails,
+                    AllergiesDetails = s.AllergiesDetails,
+                    CreatedAt = s.CreatedAt,
+                })
+                .SingleOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public async Task InsertAsync(Patient pateint)
@@ -38,6 +62,29 @@ namespace PatientPortal.Domain.Repositories.Patients
                 }
                 _dbSet.Remove(book);
             }, cancellationToken);
+        }
+
+        public async Task<(IReadOnlyCollection<Patient> data, int Total)> GetPaginatedAsync(int pageIndex, int pageSize)
+        {
+            var data = await _dbSet.AsNoTracking()
+                .Include(x => x.DiseaseInformation)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new Patient
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    DiseaseInformation = new DiseaseInformation
+                    {
+                        Name = s.DiseaseInformation.Name
+                    },
+                    IsEpilepsy = s.IsEpilepsy
+                })
+                .ToListAsync();
+
+            var total = await _dbSet.CountAsync();
+
+            return (data, total);
         }
     }
 }

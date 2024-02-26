@@ -6,8 +6,12 @@ namespace PatientPortal.Domain.Repositories.Patients
     {
         Task<IReadOnlyCollection<Patient>> GetAllAsync(CancellationToken cancellationToken = default);
 
-        Task<Patient?> GetByIdAsync(Guid id, bool shouldTrack = false, 
+        Task<(IReadOnlyCollection<Patient> data, int Total)> GetPaginatedAsync(int pageIndex, int pageSize);
+
+        Task<Patient?> GetByIdAsync(int id, bool shouldTrack = false, 
             CancellationToken cancellationToken = default);
+
+        Task<Patient?> GetPatientInfoAsync(int id);
 
         Task InsertAsync(Patient pateint);
 

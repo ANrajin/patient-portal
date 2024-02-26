@@ -23,9 +23,9 @@ namespace PatientPortal.Domain.Repositories.Patients
                 cancellationToken);
         }
 
-        public async Task InsertAsync(Patient pateint, CancellationToken cancellationToken = default)
+        public async Task InsertAsync(Patient pateint)
         {
-            await _dbSet.AddAsync(pateint, cancellationToken);
+            await _dbSet.AddAsync(pateint);
         }
 
         public async Task DeleteAsync(Patient book, CancellationToken cancellationToken = default)

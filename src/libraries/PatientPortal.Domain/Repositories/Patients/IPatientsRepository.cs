@@ -9,8 +9,7 @@ namespace PatientPortal.Domain.Repositories.Patients
         Task<Patient?> GetByIdAsync(Guid id, bool shouldTrack = false, 
             CancellationToken cancellationToken = default);
 
-        Task InsertAsync(Patient pateint,
-            CancellationToken cancellationToken = default);
+        Task InsertAsync(Patient pateint);
 
         Task DeleteAsync(Patient book,
             CancellationToken cancellationToken = default);

@@ -30,6 +30,8 @@
     $("#patient-form").on('submit', function (e) {
         e.preventDefault();
 
+        const form = $(this);
+
         let ncds = [];
         let allergies = [];
 
@@ -52,13 +54,21 @@
         $.ajax({
             url: 'https://localhost:7243/patients',
             method: 'post',
-            contentType: 'application/json;',
-            dataType: 'json',
-            data: JSON.stringify(formData)
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            beforeSend: function () {
+                const btn = $(form).find('button[type=submit]');
+                $(btn).attr('disabled', true);
+                $(btn).text('Saving...');
+            }
         }).done(function (res) {
-            console.log(res);
+            window.location.reload();
         }).fail(function (err) {
             console.error(err);
+        }).always(function () {
+            const btn = $(form).find('button[type=submit]');
+            $(btn).attr('disabled', false);
+            $(btn).text('Save');
         });
 
         return false;

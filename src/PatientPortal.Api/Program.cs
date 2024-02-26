@@ -1,9 +1,12 @@
 using PatientPortal.Api.Endpoints;
+using PatientPortal.Api.Models.PatientModels;
 using PatientPortal.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDomainServices(builder.Configuration);
+
+builder.Services.AddScoped<PatientModel>();
 
 //Dependencies
 builder.Services.AddEndpointsApiExplorer();
@@ -36,7 +39,7 @@ app
     .MapGroup("patients")
     .WithTags("Patients")
     .WithOpenApi()
-    .MapPatientEndPoints();
+    .MapPatientEndPoints(app.Logger);
 
 app
     .MapGroup("allergies")

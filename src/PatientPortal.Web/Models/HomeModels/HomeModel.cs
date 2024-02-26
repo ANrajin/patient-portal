@@ -13,25 +13,23 @@ namespace PatientPortal.Web.Models.HomeModels
 
         public async Task LoadModelData()
         {
-            var allergyTask = unitOfWorks.AllergiesRepository.GetSelectListItemsAsync();
-            var ncdTask = unitOfWorks.NcdsRepository.GetSelectListItemsAsync();
-            var diseaseInfoTask = unitOfWorks.DiseaseInformationsRepository.GetSelectListItemsAsync();
+            var allergyTask = await unitOfWorks.AllergiesRepository.GetSelectListItemsAsync();
+            var ncdTask = await unitOfWorks.NcdsRepository.GetSelectListItemsAsync();
+            var diseaseInfoTask = await unitOfWorks.DiseaseInformationsRepository.GetSelectListItemsAsync();
 
-            await Task.WhenAll(allergyTask, ncdTask, diseaseInfoTask);
-
-            AllergiesList = allergyTask.Result.Select(s => new SelectListItem
+            AllergiesList = allergyTask.Select(s => new SelectListItem
             {
                 Value = s.Value,
                 Text = s.Text,
             }).ToList();
 
-            NcdList = ncdTask.Result.Select(s => new SelectListItem
+            NcdList = ncdTask.Select(s => new SelectListItem
             {
                 Value = s.Value,
                 Text = s.Text,
             }).ToList();
 
-            DiseasesInfoList = diseaseInfoTask.Result.Select(s => new SelectListItem
+            DiseasesInfoList = diseaseInfoTask.Select(s => new SelectListItem
             {
                 Value = s.Value,
                 Text = s.Text,

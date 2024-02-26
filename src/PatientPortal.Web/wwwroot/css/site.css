@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.field-required::after {
+    content: "*";
+    margin-left: 2px !important;
+    color: red !important;
+}

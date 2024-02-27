@@ -30,7 +30,7 @@
     $("#patient-form").on('submit', function (e) {
         e.preventDefault();
 
-        const form = $(this);
+        if (!form.valid()) return false;
 
         let ncds = [];
         let allergies = [];

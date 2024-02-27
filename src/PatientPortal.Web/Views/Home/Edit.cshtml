@@ -5,6 +5,40 @@
     ViewData["Title"] = "Edit";
 }
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let form = $("#patient-update-form");
+
+            form.validate({
+                errorClass: "is-invalid error",
+                errorElement: "span",
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") == "size[]") {
+                        $("#size-error").html(error);
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                rules: {
+                    Name: {
+                        required: true,
+                        maxlength: 255
+                    },
+                    DiseasesId: {
+                        required: true,
+                        number: true
+                    },
+                    Epilepsy: {
+                        required: true,
+                        number: true
+                    }
+                }
+            });
+        })
+    </script>
+}
+
 <h1>Update Patient Information</h1>
 
 <div class="row">

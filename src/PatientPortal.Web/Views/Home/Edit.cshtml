@@ -28,6 +28,10 @@
                             <td>
                                 <select id="DiseasesId" name="DiseasesId" class="form-control form-select my-2">
                                     <option value="" selected disabled>Please Select a Disease Name</option>
+                                    @foreach(var item in Model.DiseasesInfoList)
+                                    {
+                                        <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                                    }
                                 </select>
                             </td>
                         </tr>
@@ -40,7 +44,9 @@
                                     <option value="" selected disabled>Please Select</option>
                                     @foreach (var item in Enum.GetValues(typeof(Epilepsy)))
                                     {
-                                        <option value="@((int) item)">@Enum.GetName(typeof(Epilepsy), item)</option>
+                                        <option value="@item" selected="@Model.Epilepsy.Equals(item)">
+                                            @Enum.GetName(typeof(Epilepsy), item)
+                                        </option>
                                     }
                                 </select>
                             </td>
@@ -53,6 +59,13 @@
                                 <div class="row my-2">
                                     <div class="col-5">
                                         <select name="Ncds" id="Ncds" multiple style="width: 100%; height: 250px;">
+                                            @foreach(var item in Model.NcdList)
+                                            {
+                                                @if(!item.Selected)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
                                         </select>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-center">
@@ -63,6 +76,13 @@
                                     </div>
                                     <div class="col-5">
                                         <select name="SelectedNcds" id="SelectedNcds" multiple style="width: 100%; height: 250px;">
+                                            @foreach (var item in Model.NcdList)
+                                            {
+                                                @if (item.Selected)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -76,6 +96,13 @@
                                 <div class="row my-2">
                                     <div class="col-5">
                                         <select name="Allergies" id="Allergies" multiple style="width: 100%; height: 250px;">
+                                            @foreach (var item in Model.AllergiesList)
+                                            {
+                                                @if (!item.Selected)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
                                         </select>
                                     </div>
                                     <div class="col-2 d-flex align-items-center justify-content-center">
@@ -86,6 +113,13 @@
                                     </div>
                                     <div class="col-5">
                                         <select name="SelectedAllergies" id="SelectedAllergies" multiple style="width: 100%; height: 250px;">
+                                            @foreach (var item in Model.AllergiesList)
+                                            {
+                                                @if (item.Selected)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            }
                                         </select>
                                     </div>
                                 </div>

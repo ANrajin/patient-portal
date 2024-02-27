@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using PatientPortal.Domain.Enums;
 using PatientPortal.Domain.UnitOfWork;
 
 namespace PatientPortal.Web.Models.HomeModels
@@ -8,6 +9,8 @@ namespace PatientPortal.Web.Models.HomeModels
         public int Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
+
+        public Epilepsy Epilepsy { get; set; }
 
         public IList<SelectListItem> EpilepcyList { get; set; } = [];
 
@@ -26,6 +29,9 @@ namespace PatientPortal.Web.Models.HomeModels
             var ncdTask = await unitOfWorks.NcdsRepository.GetSelectListItemsAsync();
             var diseaseInfoTask = await unitOfWorks.DiseaseInformationsRepository.GetSelectListItemsAsync();
 
+            Name = data.Name;
+            Epilepsy = data.IsEpilepsy;
+
             DiseasesInfoList = diseaseInfoTask.Select(s => new SelectListItem
             {
                 Text = s.Text,
@@ -37,7 +43,7 @@ namespace PatientPortal.Web.Models.HomeModels
             {
                 Text = s.Text,
                 Value = s.Value.ToString(),
-                Selected = data.AllergiesDetails.Any(x => x.AllergyId.Equals(s.Value))
+                Selected = data.NCDDetails.Any(x => x.NCDId.Equals(s.Value))
             }).ToList();
 
             AllergiesList = allergyTask.Select(s => new SelectListItem 

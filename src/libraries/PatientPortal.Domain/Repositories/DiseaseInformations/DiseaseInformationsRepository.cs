@@ -22,7 +22,7 @@ namespace PatientPortal.Domain.Repositories.DiseaseInformations
                 .Select(s => new SelectListItemsBO
                 {
                     Text = s.Name,
-                    Value = s.Id.ToString()
+                    Value = s.Id
                 }).ToListAsync();
         }
     }

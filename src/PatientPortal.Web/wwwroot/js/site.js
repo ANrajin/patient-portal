@@ -70,55 +70,5 @@
             $(btn).attr('disabled', false);
             $(btn).text('Save');
         });
-
-        return false;
-    });
-
-    //Datatable
-    const dataTable = $("#patientInfo").DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: 'https://localhost:7243/patients',
-        displayStart: 1,
-        "columnDefs": [
-            {
-                "orderable": false,
-                "targets": 3,
-                "render": function (data, type, row) {
-                    return `
-                        <a href="/home/patients/${data}" class="btn btn-outline-primary" data-bs-toggle="tooltip"
-                            data-bs-placement="bottom" title="View Information">
-                            View
-                        </a>
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="" data-bs-toggle="tooltip"
-                            data-bs-placement="bottom" title="Edit">
-                            Edit
-                        </button>
-                        <button type="button" class="btn btn-outline-danger delete-btn" data-id=${data}
-                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Trash">
-                            Delete
-                        </button>
-                    `;
-                }
-            }
-        ]
-    });
-
-    $("body").on('click', '.delete-btn', function (e) {
-        e.preventDefault();
-
-        const id = $(this).data('id');
-
-        if (!confirm("Are you sure to delete?")) return;
-
-        $.ajax({
-            url: `https://localhost:7243/patients/${id}`,
-            method: 'delete',
-        }).done(function (res) {
-            window.Location.reload();
-        }).fail(function (err) {
-            console.error(err);
-        });
     });
 });

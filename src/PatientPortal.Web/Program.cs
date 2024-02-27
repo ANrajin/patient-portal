@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<HomeModel>();
 builder.Services.AddScoped<PatientViewModel>();
+builder.Services.AddScoped<PatientEditModel>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

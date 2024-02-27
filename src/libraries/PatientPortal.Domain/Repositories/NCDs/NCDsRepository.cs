@@ -21,7 +21,7 @@ namespace PatientPortal.Domain.Repositories.NCDs
                 .Select(s => new SelectListItemsBO
                 {
                     Text = s.Name,
-                    Value = s.Id.ToString()
+                    Value = s.Id
                 }).ToListAsync();
         }
     }

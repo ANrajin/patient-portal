@@ -9,6 +9,56 @@
 @section Scripts{
     <script src="~/lib/datatables/jquery.datatables.min.js"></script>
     <script src="~/lib/datatables-bs4/js/datatables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //Datatable
+            const dataTable = $("#patientInfo").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: 'https://localhost:7243/patients',
+                displayStart: 1,
+                "columnDefs": [
+                    {
+                        "orderable": false,
+                        "targets": 3,
+                        "render": function (data, type, row) {
+                            return `
+                                <a href="/home/patients/${data}" class="btn btn-outline-primary" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="View Information">
+                                    View
+                                </a>
+                                <a href="/home/edit/${data}" class="btn btn-outline-primary" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="View Information">
+                                    Edit
+                                </a>
+                                <button type="button" class="btn btn-outline-danger delete-btn" data-id=${data}
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Trash">
+                                    Delete
+                                </button>
+                            `;
+                        }
+                    }
+                ]
+            });
+
+            $("body").on('click', '.delete-btn', function (e) {
+                e.preventDefault();
+
+                const id = $(this).data('id');
+
+                if (!confirm("Are you sure to delete?")) return;
+
+                $.ajax({
+                    url: `https://localhost:7243/patients/${id}`,
+                    method: 'delete',
+                }).done(function (res) {
+                    window.Location.reload();
+                }).fail(function (err) {
+                    console.error(err);
+                });
+            });
+        });
+    </script>
 }
 
 <div class="my-2">

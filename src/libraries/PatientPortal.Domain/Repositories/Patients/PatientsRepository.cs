@@ -47,6 +47,23 @@ namespace PatientPortal.Domain.Repositories.Patients
                 .SingleOrDefaultAsync(x => x.Id.Equals(id));
         }
 
+        public async Task<Patient?> GetPatientEditInfoAsync(int id)
+        {
+            return await _dbSet.AsNoTracking()
+                .Include(x => x.NCDDetails)
+                .Include(x => x.AllergiesDetails)
+                .Select(s => new Patient
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    DiseaseInformationId = s.DiseaseInformationId,
+                    IsEpilepsy = s.IsEpilepsy,
+                    NCDDetails = s.NCDDetails,
+                    AllergiesDetails = s.AllergiesDetails,
+                })
+                .SingleOrDefaultAsync(x => x.Id.Equals(id));
+        }
+
         public async Task InsertAsync(Patient pateint)
         {
             await _dbSet.AddAsync(pateint);

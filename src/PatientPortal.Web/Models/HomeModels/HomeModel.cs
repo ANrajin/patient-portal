@@ -19,19 +19,19 @@ namespace PatientPortal.Web.Models.HomeModels
 
             AllergiesList = allergyTask.Select(s => new SelectListItem
             {
-                Value = s.Value,
+                Value = s.Value.ToString(),
                 Text = s.Text,
             }).ToList();
 
             NcdList = ncdTask.Select(s => new SelectListItem
             {
-                Value = s.Value,
+                Value = s.Value.ToString(),
                 Text = s.Text,
             }).ToList();
 
             DiseasesInfoList = diseaseInfoTask.Select(s => new SelectListItem
             {
-                Value = s.Value,
+                Value = s.Value.ToString(),
                 Text = s.Text,
             }).ToList();
         }

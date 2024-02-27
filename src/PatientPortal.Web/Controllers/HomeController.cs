@@ -61,7 +61,7 @@ namespace PatientPortal.Web.Controllers
             {
                 using var serviceScope = serviceScopeFactory.CreateScope();
 
-                var model = serviceScope.ServiceProvider.GetRequiredService<PatientViewModel>();
+                var model = serviceScope.ServiceProvider.GetRequiredService<PatientEditModel>();
 
                 await model.LoadModelData(id);
 

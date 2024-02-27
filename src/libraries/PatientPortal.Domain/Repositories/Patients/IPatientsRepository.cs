@@ -13,6 +13,8 @@ namespace PatientPortal.Domain.Repositories.Patients
 
         Task<Patient?> GetPatientInfoAsync(int id);
 
+        Task<Patient?> GetPatientEditInfoAsync(int id);
+
         Task InsertAsync(Patient pateint);
 
         Task DeleteAsync(Patient book,

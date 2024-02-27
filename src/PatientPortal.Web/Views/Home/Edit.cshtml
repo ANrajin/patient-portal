@@ -9,7 +9,8 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <form id="patient-form">
+        <form id="patient-update-form">
+            <input type="hidden" name="Id" value="@Model.Id"/>
             <div class="form-group">
                 <table class="w-100" id="patient-form-table">
                     <tbody>
@@ -44,7 +45,7 @@
                                     <option value="" selected disabled>Please Select</option>
                                     @foreach (var item in Enum.GetValues(typeof(Epilepsy)))
                                     {
-                                        <option value="@item" selected="@Model.Epilepsy.Equals(item)">
+                                        <option value="@((int)item)" selected="@Model.Epilepsy.Equals(item)">
                                             @Enum.GetName(typeof(Epilepsy), item)
                                         </option>
                                     }
@@ -90,7 +91,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label class="form-label field-required" for="Allergies">Allergies</label>
+                                <label class="form-label" for="Allergies">Allergies</label>
                             </td>
                             <td>
                                 <div class="row my-2">

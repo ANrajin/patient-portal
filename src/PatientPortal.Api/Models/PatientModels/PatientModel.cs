@@ -17,11 +17,6 @@ namespace PatientPortal.Api.Models.PatientModels
 
             await _unitOfWorks.PatientsRepository.InsertAsync(data);
             await _unitOfWorks.SaveAsync();
-
-            //var set = dbContext.DbSet<Patient>();
-
-            //await set.AddAsync(data);
-            //await dbContext.SaveAsync();
         }
 
         private static Patient PrepareEntity(PatientCreateModel patient)
@@ -91,9 +86,24 @@ namespace PatientPortal.Api.Models.PatientModels
             await _unitOfWorks.SaveAsync();
         }
 
-        internal IList<ValidationErrorModel> CreateValidationErrors(IList<ValidationFailure> errors)
+        public IList<ValidationErrorModel> CreateValidationErrors(IList<ValidationFailure> errors)
         {
             return errors.Select(s => new ValidationErrorModel(s.PropertyName, s.ErrorMessage)).ToList();
+        }
+
+        public async Task UpdatePatientAsync(int id, PatientCreateModel patient)
+        {
+            var entity = await _unitOfWorks.PatientsRepository.GetPatientEditInfoAsync(id, true);
+
+            var data = PrepareEntity(patient);
+
+            entity.Name = data.Name;
+            entity.DiseaseInformationId = data.DiseaseInformationId;
+            entity.IsEpilepsy = data.IsEpilepsy;
+            entity.NCDDetails = data.NCDDetails;
+            entity.AllergiesDetails = data.AllergiesDetails;
+
+            await _unitOfWorks.SaveAsync();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PatientPortal.Api.Models;
 using PatientPortal.Api.Models.PatientModels;
-using PatientPortal.Domain.UnitOfWork;
 
 namespace PatientPortal.Api.Endpoints
 {
@@ -54,9 +53,24 @@ namespace PatientPortal.Api.Endpoints
                 }
             });
 
-            builder.MapPut("/{id:int}", async (int id, IUnitOfWorks unitOfWorks) =>
+            builder.MapPut("/{id:int}", async (int id, PatientCreateModel patient,
+                IServiceScopeFactory serviceScopeFactory) =>
             {
-                return Results.Ok();
+                try
+                {
+                    using var serviceScope = serviceScopeFactory.CreateScope();
+
+                    var model = serviceScope.ServiceProvider.GetRequiredService<PatientModel>();
+
+                    await model.UpdatePatientAsync(id, patient);
+
+                    return Results.NoContent();
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex.Message, ex);
+                    return Results.Problem();
+                }
             });
 
             builder.MapDelete("/{id:int}", async (int id,

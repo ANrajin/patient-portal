@@ -29,6 +29,7 @@ namespace PatientPortal.Web.Models.HomeModels
             var ncdTask = await unitOfWorks.NcdsRepository.GetSelectListItemsAsync();
             var diseaseInfoTask = await unitOfWorks.DiseaseInformationsRepository.GetSelectListItemsAsync();
 
+            Id = data.Id;
             Name = data.Name;
             Epilepsy = data.IsEpilepsy;
 

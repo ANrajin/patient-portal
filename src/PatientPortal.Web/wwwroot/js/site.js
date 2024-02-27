@@ -71,4 +71,50 @@
             $(btn).text('Save');
         });
     });
+
+    $("#patient-update-form").on('submit', function (e) {
+        e.preventDefault();
+
+        const form = $(this);
+
+        const id = $(form).find('input[name=Id]').val();
+        let ncds = [];
+        let allergies = [];
+
+        $.each($('select[name=SelectedNcds]').find('option'), function (i, opt) {
+            ncds.push(Number($(opt).val()))
+        });
+
+        $.each($('select[name=SelectedAllergies]').find('option'), function (i, opt) {
+            allergies.push(Number($(opt).val()))
+        });
+
+        const formData = {
+            Name: $(form).find('input[name=Name]').val(),
+            DiseasesId: Number($(form).find('select[name=DiseasesId]').val()),
+            Epilepsy: Number($(form).find('select[name=Epilepsy]').val()),
+            SelectedNcds: ncds,
+            SelectedAllergies: allergies
+        };
+
+        $.ajax({
+            url: `https://localhost:7243/patients/${id}`,
+            method: 'put',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            beforeSend: function () {
+                const btn = $(form).find('button[type=submit]');
+                $(btn).attr('disabled', true);
+                $(btn).text('Saving...');
+            }
+        }).done(function (res) {
+            window.location.reload();
+        }).fail(function (err) {
+            console.error(err);
+        }).always(function () {
+            const btn = $(form).find('button[type=submit]');
+            $(btn).attr('disabled', false);
+            $(btn).text('Save');
+        });
+    });
 });

@@ -25,7 +25,7 @@ namespace PatientPortal.Domain.Repositories.Patients
 
         public async Task<Patient?> GetPatientInfoAsync(int id)
         {
-            return await _dbSet.AsNoTracking()
+            return await _dbSet.AsQueryable()
                 .Include(x => x.DiseaseInformation)
                 .Include(x => x.NCDDetails)
                 .ThenInclude(y => y.NCD)
@@ -47,20 +47,18 @@ namespace PatientPortal.Domain.Repositories.Patients
                 .SingleOrDefaultAsync(x => x.Id.Equals(id));
         }
 
-        public async Task<Patient?> GetPatientEditInfoAsync(int id)
+        public async Task<Patient?> GetPatientEditInfoAsync(int id, bool shouldTrack = false)
         {
-            return await _dbSet.AsNoTracking()
+            var query = _dbSet.AsQueryable();
+
+            if (!shouldTrack)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query
                 .Include(x => x.NCDDetails)
                 .Include(x => x.AllergiesDetails)
-                .Select(s => new Patient
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    DiseaseInformationId = s.DiseaseInformationId,
-                    IsEpilepsy = s.IsEpilepsy,
-                    NCDDetails = s.NCDDetails,
-                    AllergiesDetails = s.AllergiesDetails,
-                })
                 .SingleOrDefaultAsync(x => x.Id.Equals(id));
         }
 
@@ -69,15 +67,15 @@ namespace PatientPortal.Domain.Repositories.Patients
             await _dbSet.AddAsync(pateint);
         }
 
-        public async Task DeleteAsync(Patient book, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(Patient patient, CancellationToken cancellationToken = default)
         {
             await Task.Run(() =>
             {
-                if (dbContext.Entry(book).State == EntityState.Detached)
+                if (dbContext.Entry(patient).State == EntityState.Detached)
                 {
-                    _dbSet.Attach(book);
+                    _dbSet.Attach(patient);
                 }
-                _dbSet.Remove(book);
+                _dbSet.Remove(patient);
             }, cancellationToken);
         }
 

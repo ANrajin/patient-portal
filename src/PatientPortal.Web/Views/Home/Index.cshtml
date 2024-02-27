@@ -23,11 +23,11 @@
                         "targets": 3,
                         "render": function (data, type, row) {
                             return `
-                                <a href="/home/patients/${data}" class="btn btn-outline-primary" data-bs-toggle="tooltip"
+                                <a href="/patients/view/${data}" class="btn btn-outline-primary" data-bs-toggle="tooltip"
                                     data-bs-placement="bottom" title="View Information">
                                     View
                                 </a>
-                                <a href="/home/edit/${data}" class="btn btn-outline-primary" data-bs-toggle="tooltip"
+                                        <a href="/patients/edit/${data}" class="btn btn-outline-primary" data-bs-toggle="tooltip"
                                     data-bs-placement="bottom" title="View Information">
                                     Edit
                                 </a>
@@ -62,7 +62,7 @@
 }
 
 <div class="my-2">
-    <a asp-controller="Home" asp-action="Create" class="btn btn-primary">Add New Patient</a>
+    <a asp-controller="Patients" asp-action="Create" class="btn btn-primary">Add New Patient</a>
 </div>
 
 <table id="patientInfo" class="table table-striped">

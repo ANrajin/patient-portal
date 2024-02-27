@@ -4,19 +4,72 @@ using PatientPortal.Domain.UnitOfWork;
 
 namespace PatientPortal.Api.Models.PatientModels
 {
-    public sealed class PatientModel(
+    public class PatientModel(
         IUnitOfWorks unitOfWorks)
     {
         private readonly IUnitOfWorks _unitOfWorks = unitOfWorks;
 
         public async Task CreatePatient(PatientCreateModel patient)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(patient));
+            ArgumentNullException.ThrowIfNull(patient);
 
             var data = PrepareEntity(patient);
 
             await _unitOfWorks.PatientsRepository.InsertAsync(data);
             await _unitOfWorks.SaveAsync();
+        }
+
+        public async Task<object> GetPatientsAsync(DatatableModel dataTableModel)
+        {
+            var (data, total) = await _unitOfWorks.PatientsRepository.GetPaginatedAsync(
+                dataTableModel.PageIndex, 
+                dataTableModel.PageSize);
+
+            return new
+            {
+                recordsTotal = total,
+                recordsFiltered = data.Count,
+                data = (from item in data
+                        select new string[]
+                {
+                    item.Name,
+                    item.DiseaseInformation?.Name ?? "-",
+                    item.IsEpilepsy.ToString(),
+                    item.Id.ToString()
+                }).ToArray()
+            };
+        }
+
+        public async Task UpdatePatientAsync(int id, PatientCreateModel patient)
+        {
+            ArgumentNullException.ThrowIfNull(patient);
+
+            var entity = await _unitOfWorks.PatientsRepository.GetPatientEditInfoAsync(id, true)
+                                ?? throw new ArgumentException("Patient not found by id");
+
+            var data = PrepareEntity(patient);
+
+            entity.Name = data.Name;
+            entity.DiseaseInformationId = data.DiseaseInformationId;
+            entity.IsEpilepsy = data.IsEpilepsy;
+            entity.NCDDetails = data.NCDDetails;
+            entity.AllergiesDetails = data.AllergiesDetails;
+
+            await _unitOfWorks.SaveAsync();
+        }
+
+        public async Task RemovePatientAsync(int id)
+        {
+            var patient = await _unitOfWorks.PatientsRepository.GetByIdAsync(id, true)
+                ?? throw new ArgumentException("Patient not found by id");
+
+            await _unitOfWorks.PatientsRepository.DeleteAsync(patient);
+            await _unitOfWorks.SaveAsync();
+        }
+
+        public IList<ValidationErrorModel> PrepareValidationErrors(IList<ValidationFailure> errors)
+        {
+            return errors.Select(s => new ValidationErrorModel(s.PropertyName, s.ErrorMessage)).ToList();
         }
 
         private static Patient PrepareEntity(PatientCreateModel patient)
@@ -54,56 +107,6 @@ namespace PatientPortal.Api.Models.PatientModels
                 NCDDetails = ncdDetails,
                 AllergiesDetails = allergyDetails
             };
-        }
-
-        public async Task<object> GetPatientsAsync(DatatableModel dataTableModel)
-        {
-            var (data, total) = await _unitOfWorks.PatientsRepository.GetPaginatedAsync(
-                dataTableModel.PageIndex, 
-                dataTableModel.PageSize);
-
-            return new
-            {
-                recordsTotal = total,
-                recordsFiltered = data.Count,
-                data = (from item in data
-                        select new string[]
-                {
-                    item.Name,
-                    item.DiseaseInformation?.Name ?? "-",
-                    item.IsEpilepsy.ToString(),
-                    item.Id.ToString()
-                }).ToArray()
-            };
-        }
-
-        public async Task RemovePatientAsync(int id)
-        {
-            var patient = await _unitOfWorks.PatientsRepository.GetByIdAsync(id, true)
-                ?? throw new ArgumentException("Patient not found by id");
-
-            await _unitOfWorks.PatientsRepository.DeleteAsync(patient);
-            await _unitOfWorks.SaveAsync();
-        }
-
-        public IList<ValidationErrorModel> PrepareValidationErrors(IList<ValidationFailure> errors)
-        {
-            return errors.Select(s => new ValidationErrorModel(s.PropertyName, s.ErrorMessage)).ToList();
-        }
-
-        public async Task UpdatePatientAsync(int id, PatientCreateModel patient)
-        {
-            var entity = await _unitOfWorks.PatientsRepository.GetPatientEditInfoAsync(id, true);
-
-            var data = PrepareEntity(patient);
-
-            entity.Name = data.Name;
-            entity.DiseaseInformationId = data.DiseaseInformationId;
-            entity.IsEpilepsy = data.IsEpilepsy;
-            entity.NCDDetails = data.NCDDetails;
-            entity.AllergiesDetails = data.AllergiesDetails;
-
-            await _unitOfWorks.SaveAsync();
         }
     }
 }

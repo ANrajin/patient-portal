@@ -44,7 +44,7 @@ namespace PatientPortal.Api.Endpoints
                         return Results.Ok();
                     }
 
-                    return Results.BadRequest(model.CreateValidationErrors(validate.Errors));
+                    return Results.BadRequest(model.PrepareValidationErrors(validate.Errors));
                 }
                 catch (Exception ex)
                 {
@@ -58,13 +58,21 @@ namespace PatientPortal.Api.Endpoints
             {
                 try
                 {
+                    var validator = new PatientCreateValidator();
+                    var validate = validator.Validate(patient);
+
                     using var serviceScope = serviceScopeFactory.CreateScope();
 
                     var model = serviceScope.ServiceProvider.GetRequiredService<PatientModel>();
 
-                    await model.UpdatePatientAsync(id, patient);
+                    if (validate.IsValid)
+                    {
+                        await model.UpdatePatientAsync(id, patient);
 
-                    return Results.NoContent();
+                        return Results.NoContent();
+                    }
+
+                    return Results.BadRequest(model.PrepareValidationErrors(validate.Errors));
                 }
                 catch (Exception ex)
                 {

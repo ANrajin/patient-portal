@@ -86,7 +86,7 @@ namespace PatientPortal.Api.Models.PatientModels
             await _unitOfWorks.SaveAsync();
         }
 
-        public IList<ValidationErrorModel> CreateValidationErrors(IList<ValidationFailure> errors)
+        public IList<ValidationErrorModel> PrepareValidationErrors(IList<ValidationFailure> errors)
         {
             return errors.Select(s => new ValidationErrorModel(s.PropertyName, s.ErrorMessage)).ToList();
         }

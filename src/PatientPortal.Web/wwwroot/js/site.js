@@ -30,6 +30,8 @@
     $("#patient-form").on('submit', function (e) {
         e.preventDefault();
 
+        const form = $(this);
+
         if (!form.valid()) return false;
 
         let ncds = [];
@@ -62,9 +64,11 @@
                 $(btn).text('Saving...');
             }
         }).done(function (res) {
-            window.location.reload();
+            alert("Successfully stored patient informations!");
+            window.location.href = '/';
         }).fail(function (err) {
             console.error(err);
+            alert("Something went wrong!");
         }).always(function () {
             const btn = $(form).find('button[type=submit]');
             $(btn).attr('disabled', false);
@@ -108,9 +112,11 @@
                 $(btn).text('Saving...');
             }
         }).done(function (res) {
-            window.location.reload();
+            alert("Successfully updated patient informations!");
+            window.location.href = '/';
         }).fail(function (err) {
             console.error(err);
+            alert("Something went wrong!");
         }).always(function () {
             const btn = $(form).find('button[type=submit]');
             $(btn).attr('disabled', false);

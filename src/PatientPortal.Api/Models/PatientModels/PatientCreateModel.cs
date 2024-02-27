@@ -31,7 +31,6 @@ namespace PatientPortal.Api.Models.PatientModels
 
             RuleFor(x => x.Epilepsy)
                 .Cascade(cascadeMode: CascadeMode.Stop)
-                .NotEmpty()
                 .NotNull()
                 .WithMessage("Patient {PropertyName} is required!");
         }
